@@ -1,6 +1,7 @@
 # IR-Project
 
 IR-Project
+
 please edit it:
 
 OurStanfordParser.java is for step 2.1 in our paper ( extracting meaningful words from user query)
