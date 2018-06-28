@@ -23,13 +23,7 @@ import edu.stanford.nlp.parser.nndep.DependencyParser;
 import edu.stanford.nlp.pipeline.Annotation;
 import edu.stanford.nlp.process.PTBTokenizer;
 
-
-
-
 public class OurStanfordParser {
-   
-    
- 
 	 public static String Parse_Data(String sent)
 	 {// this function is out first step ( 2.1 in our paper)
 	  // this function get as input user query and output the meaningful of the query
@@ -61,8 +55,6 @@ public class OurStanfordParser {
 	     // Get words and Tags 
 	     for (TaggedWord tw : parse.taggedYield())
 	     { 
-	    	 
-	   
 	     tags.add(tw.tag());
 	     }
 
@@ -71,8 +63,7 @@ public class OurStanfordParser {
 	     {
 	     stems.add(tw.word()); 
 	     }
-	         
-	     
+
 	     // Get dependency tree
 	     GrammaticalStructureFactory gsf = tlp.grammaticalStructureFactory();      
 	     GrammaticalStructure gs = gsf.newGrammaticalStructure(parse);      
