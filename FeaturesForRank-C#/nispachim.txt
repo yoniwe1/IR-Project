@@ -1,0 +1,87 @@
+   
+   // ***********  to prepare 5 ranked answers for 300 questions of Hagay **********
+   string[] lineq = null; string[] lineid = null;
+            // Read the file and display it line by line.  
+            string[] parameterstoQuery;
+
+            List<idAnswers> submitToHagay = new List<idAnswers>();
+            String html;
+           lineq = File.ReadAllLines(@"c:\\tmp\\allQueries.txt");
+            lineid = File.ReadAllLines(@"c:\\tmp\\allId.txt");
+            Console.WriteLine(lineid.Length+" "+ lineq.Length);
+            for(int i= 0; i<lineid.Length;i++)//move each question
+            {
+                lineid[i] = lineid[i].Replace("\t", "");
+                Console.WriteLine(" is " + i);
+               
+                    parameterstoQuery = lineq[i].Split(',');
+
+                if (parameterstoQuery[0].Contains(":"))
+                    parameterstoQuery[0] = parameterstoQuery[0].Replace(":", "");
+              
+               string url = string.Format("{0}localhost:8983/solr/techproducts/query?q=nbestanswers:{1}&rq={{!ltr%20model=my_efi_feature_store%20reRankDocs=1000%20efi.text_a={2}%20efi.text_b={3}%20efi.text_c={4}}}&fl=id,score,question,nbestanswers&start=0&rows=1000", "http://", parameterstoQuery[0], parameterstoQuery[1], parameterstoQuery[2], parameterstoQuery[3]);
+
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+                request.AutomaticDecompression = DecompressionMethods.GZip;
+
+                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                using (Stream stream = response.GetResponseStream())
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                     html = reader.ReadToEnd();
+                }
+
+                string[] words1 = html.Split(new string[] { "\"docs\":[\n" }, StringSplitOptions.None);
+
+                String jsonFeatures = words1[1].Remove(words1[1].Length - 7);
+                jsonFeatures = jsonFeatures.Replace("[", "").Replace("]", "");
+                jsonFeatures = "[" + jsonFeatures + "]";
+                List<evalFinal> allresults1q = JsonConvert.DeserializeObject<List<evalFinal>>(jsonFeatures);//for 1 question
+                                                                                                            //now we have all the answers in the webpage- let's take the first 5
+                idAnswers currentmain = new idAnswers();
+                currentmain.id = lineid[i];
+                
+                for (int j = 0; j < 5; j++)
+                {
+                    answerScore oneAnswer = new answerScore();
+                    if ((i==85||i==110)&&allresults1q.Count<=j)
+                    {
+                        
+                        oneAnswer.answer = allresults1q[0].nbestanswers;
+                        oneAnswer.score = allresults1q[0].score;
+                    }
+                    else
+                    {
+          
+                        oneAnswer.answer = allresults1q[j].nbestanswers;
+                        oneAnswer.score = allresults1q[j].score;
+                    }
+        
+
+
+                    currentmain.answers.Add(oneAnswer);
+                }
+                submitToHagay.Add(currentmain);
+            }
+            var tosubmitjson = JsonConvert.SerializeObject(submitToHagay,Formatting.Indented);
+            System.IO.File.WriteAllText(@"c:\\tmp\\tosubmit.txt", tosubmitjson);
+
+
+			--------------------------------------------
+
+	// **** convert to nbestanswer as one string and not array. it's pre-proccessoring so it does not harm  ****
+            //List<YahooQAextended> postQAs = ConvertToExtended.convertToExt(originalQAs);
+            //int i = 1;
+            //foreach (YahooQAextended cur in postQAs)// just for unique field in solr. id is not unique
+            //{
+            //    cur.identityF = (i++).ToString();
+            //    Console.WriteLine("write identityF " + i);
+            //}
+            //string json = JsonConvert.SerializeObject(postQAs.ToArray(), Formatting.Indented);
+            ////write string to file
+            //System.IO.File.WriteAllText(@"C:\tmp\jsonExt6.json", json);
+
+
+            // notepadExtSplit.splitNodepad(); //dont run
+            //notepadExtSplit.splitOriginal(); //dont run
+
