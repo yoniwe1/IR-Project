@@ -16,7 +16,7 @@
   
   * [7] formatToRankLib2.json - RankLib feature file.
   
-  * [8] onvert_lambdamart_xml_to_json.py - Xml to JSON python converter.
+  * [8] convert_lambdamart_xml_to_json.py - Xml to JSON python converter.
   
 * Other files in the repository:
 
