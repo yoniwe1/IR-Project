@@ -28,4 +28,4 @@
   
   * FeaturesForRank-C#/stanfordForOverlapping.cs - Script to extract words to be used as parameters for the "number of overlapping terms" feature. 
   
-Remark: All other files in the FeaturesForRank-C# directory are not mandatory to read in order to understand the flow of the program. Mostly consists of entities of classes.
+**Remark:** All other files in the FeaturesForRank-C# directory are not mandatory to read in order to understand the flow of the program. Mostly consists of entities of classes.
