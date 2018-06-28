@@ -15,8 +15,8 @@ TSD 2017. Lecture Notes in Computer Science, vol 10415. Springer, Cham. L
 Link to the paper! "based paper.pdf"
 
 [2] Reference to the dataset:                 https://ciir.cs.umass.edu/downloads/nfL6/
-[3] 
-Stanford Dependency Parser                     https://stanfordnlp.github.io/CoreNLP/download.html
+
+[3] Stanford Dependency Parser                     https://stanfordnlp.github.io/CoreNLP/download.html
 
 [4] Schema File :                              managed-schema
 
@@ -25,7 +25,9 @@ Stanford Dependency Parser                     https://stanfordnlp.github.io/Cor
 [6]Script to extract feature results          FeaturesForRank-C#/ ExtractFeatures.cs
 
 [7] Script to get feature values from html.   FeaturesForRank-C#/ ExtractFeatures.cs
+
 [8]RankLib feature file.                      formatToRankLib2.json
+
 [9] Xml to JSON python converter.             convert_lambdamart_xml_to_json.py
 
 ---------------------------------------------------------------------------------------------------
