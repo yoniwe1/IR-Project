@@ -1,0 +1,32 @@
+[ 
+  {
+   "store" : "my_efi_feature_store",
+    "name" : "overlapping",
+    "class" : "org.apache.solr.ltr.feature.SolrFeature",
+	"params":{"q": "{!func} sum(sum(termfreq(nbestanswers,${text_a}),termfreq(nbestanswers,${text_b})),termfreq(nbestanswers,${text_c}))"}
+  },
+  {   
+     "store" : "my_efi_feature_store",
+   "name" : "originalScore",
+    "class" : "org.apache.solr.ltr.feature.OriginalScoreFeature",
+    "params" : {}
+  },
+      {
+	       "store" : "my_efi_feature_store",
+    "name" : "questionLength",
+    "class" : "org.apache.solr.ltr.feature.FieldLengthFeature",
+	   "params": {
+      "field": "question"
+		}
+},
+      {
+	       "store" : "my_efi_feature_store",
+    "name" : "docLength",
+    "class" : "org.apache.solr.ltr.feature.FieldLengthFeature",
+	   "params": {
+      "field": "nbestanswers"
+		}
+}
+
+  
+]
